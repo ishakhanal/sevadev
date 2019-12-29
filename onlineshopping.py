@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time 
 
@@ -27,7 +28,11 @@ driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 time.sleep(SCROLL_PAUSE_TIME)
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-#adding dresses to cart
+#hovering mouse over required dress1
+dress1 = driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[1]/div/div[1]/div/a[1]/img")
+hover1 = ActionChains(browser).move_to_element(dress1)
+
+#adding dress1 to cart
 driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[1]/div/div[2]/div[2]/a[1]/span").click()
 time.sleep(5)
 
@@ -44,6 +49,22 @@ driver.find_element_by_xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]
 
 #change window handler
 driver.switch_to(main_page)
+
+#hovering mouse over required dress2
+dress2 = driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[2]/div/div[1]/div/a[1]/img")
+hover2 = ActionChains(browser).move_to_element(dress2)
+
+#adding dress2 to cart
+driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[2]/div/div[2]/div[2]/a[1]/span").click()
+time.sleep(5)
+# change the control to popup page         
+driver.switch_to.window(popup)
+#continue shopping
+driver.find_element_by_xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]/div[1]/div[2]/div[4]/span/span").click()
+#change window handler
+driver.switch_to(main_page)
+
+
 #scroll up
 driver.execute_script("window.scrollTo(0, -500)")
 #Select Category T-SHIRTS 
@@ -53,6 +74,11 @@ driver.find_element_by_css_selector("#block_top_menu > ul > li.sfHoverForce > a"
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 time.sleep(SCROLL_PAUSE_TIME)
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+#hovering mouse over required tshirt
+tshirt = driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[2]/div/div[1]/div/a[1]/img")
+hover3 = ActionChains(browser).move_to_element(dress2)
+
 
 #adding tshirt to cart
 driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li/div/div[2]/div[2]/a[1]/span").click()
