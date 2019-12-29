@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 import time 
 
 
@@ -17,106 +18,82 @@ driver.get("http://automationpractice.com/index.php")
 
 #Click SignIn button
 time.sleep(5)
-SCROLL_PAUSE_TIME = 0.5
-main_page = driver.current_window_handle
 
-#Select category Dresses
-driver.find_element_by_css_selector("#block_top_menu > ul > li:nth-child(2) > a").click()
-time.sleep(5)
-
-#scroll down
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(SCROLL_PAUSE_TIME)
+#scroll
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-#adding dresses to cart
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li[1]/div/div[2]/div[2]/a[1]/span").click()
-time.sleep(5)
-
-#model poped up
-for handle in driver.window_handles: 
-    if handle != main_page: 
-        popup = handle 
-
-# change the control to popup page         
-driver.switch_to.window(popup)
-
-#continue shopping
-driver.find_element_by_xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]/div[1]/div[2]/div[4]/span/span").click()
-
-#change window handler
-driver.switch_to(main_page)
-#scroll up
-driver.execute_script("window.scrollTo(0, -500)")
-#Select Category T-SHIRTS 
-driver.find_element_by_css_selector("#block_top_menu > ul > li.sfHoverForce > a").click()
-
-#scroll down to select tshirt
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(SCROLL_PAUSE_TIME)
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
-#adding tshirt to cart
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div[2]/ul/li/div/div[2]/div[2]/a[1]/span").click()
-
-#model poped up
-for handle in driver.window_handles: 
-    if handle != main_page: 
-        popup2 = handle 
-
-# change the control to popup page         
-driver.switch_to.window(popup2)
-
-#proceed to checkout
-driver.find_element_by_xpath("/html/body/div/div[1]/header/div[3]/div/div/div[4]/div[1]/div[2]/div[4]/a/span").click()
+driver.find_element_by_css_selector("#header > div.nav > div > div > nav > div.header_user_info > a").click()
 time.sleep(10)
 
-purchase_page = driver.current_window_handle
-#opens purchase page
-driver.switch_to(purchase_page)
-
-#scroll down
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(SCROLL_PAUSE_TIME)
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
-#click proceed to checkout
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/p[2]/a[1]/span").click()
-
-#scroll down
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(SCROLL_PAUSE_TIME)
-
-#SIGn IN Form
-driver.find_element_by_id("email").send_keys("ishakhanal25@gmail.com")
-driver.find_element_by_id("passwd").send_keys("isha12345")
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/div[2]/form/div/p[2]/button/span").click()
-
-#scroll bottom of page
-html = driver.find_element_by_tag_name('html')
-html.send_keys(Keys.END)
-
-#click on proceed to checkout
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/form/p/button/span").click()
-time.sleep(10)
-
-#agree to the terms and conditions
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/form/div/p[2]/label").click()
-#click proceed
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/form/p/button/span").click()
+#Fill Email form
+driver.find_element_by_id("email_create").send_keys('ishakhanal25@gmail.com')
+driver.find_element_by_id("SubmitCreate").click()
 time.sleep(5)
 
-#scroll down
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(SCROLL_PAUSE_TIME)
+
+#Register Form
+#Personal info
+driver.find_element_by_css_selector("#account-creation_form > div:nth-child(1) > div.clearfix > div:nth-child(4) > label").click()
+driver.find_element_by_name("customer_firstname").send_keys('Isha')
+driver.find_element_by_name("customer_lastname").send_keys('Khanal')
+driver.find_element_by_name("passwd").send_keys('isha12345')
+
+#DateOfBirth
+selectday = Select(driver.find_element_by_id('days'))
+selectdays.select_by_value('3')
+selectmonth = Select(driver.find_element_by_id('months'))
+selectmonth.select_by_value('12')
+selectyear = Select(driver.find_element_by_id('years'))
+selectyear.select_by_value('1996')
+
+#checkbox
+driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/form/div[1]/div[7]/div/span/input").click()
+driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/form/div[1]/div[8]/div/span/input").click()
+print("Personal Info Completed....")
+
+
+#Address info
+#scroll
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-#choose payment by bankwire
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/div[3]/div[1]/div/p/a").click()
+driver.find_element_by_name("company").send_keys('sevadev')
+driver.find_element_by_name("address1").send_keys('naagpokhari')
+driver.find_element_by_name("address2").send_keys('societyBuilding')
+driver.find_element_by_name("city").send_keys('Kathmandu')
+#scroll
+driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+#select state
+selectstate = Select(driver.find_element_by_id('id_state'))
+selectstate.select_by_value('14')
+driver.find_element_by_name("postcode").send_keys('44600')
+#select country
+selectcountry = Select(driver.find_element_by_id('id_country'))
+selectcountry.select_by_visible_text('United States')
+
+driver.find_element_by_id("other").send_keys('Permanent address: Jhapa,Birtamode')
+driver.find_element_by_id("phone").send_keys('023-542476')
+driver.find_element_by_id("phone_mobile").send_keys('9862680074')
+driver.find_element_by_id("alias").send_keys('Buddhanagar')
+print("Address Info Completed....")
+
+#Registerbutton
+driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/div/form/div[4]/button/span/text()").click()
 time.sleep(5)
-
-#scroll bottom of the page
-html.send_keys(Keys.END)
-driver.find_element_by_xpath("/html/body/div/div[2]/div/div[3]/div/form/p/button/span").click()
-time.sleep(10)
+print("The form is submitted....")
 driver.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
